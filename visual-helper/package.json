@@ -1,0 +1,30 @@
+{
+  "name": "figma-visual-helper",
+  "version": "1.0.0",
+  "description": "Visual feedback service for AI-assisted Figma design",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "capture": "node capture-cli.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "screenshot-desktop": "^1.15.0",
+    "sharp": "^0.32.6",
+    "pixelmatch": "^5.3.0",
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "figma",
+    "screenshot",
+    "visual-feedback",
+    "ai-assistant"
+  ],
+  "author": "",
+  "license": "MIT"
+}

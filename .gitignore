@@ -1,0 +1,71 @@
+# Figma Files - NEVER commit these
+*.fig
+*.figma
+*.sketch
+*.xd
+
+# API Keys and Tokens
+.env
+.env.local
+.env.*.local
+**/config.js
+**/secrets.json
+**/credentials.json
+figma-token.txt
+api-keys.txt
+
+# Personal/Client Information
+.memory-bank/
+private/
+client-files/
+work/
+drafts/
+*.backup
+*-backup.*
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+out/
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/settings.json
+.vscode/launch.json
+
+# Visual Helper Captures (may contain client designs)
+visual-helper/captures/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+!visual-helper/example-capture.png  # Allow example image
+
+# VS Code Extension (if it has personal config)
+src/figma-bridge-server.js
+src/config.js
+
+# Personal notes
+TODO.md
+NOTES.md
+personal-notes.txt
+
+# Any test files that might have real data
+test-data/
+*.test.fig
+*-test.fig
+
+# Figma plugin development files with tokens
+manifest-dev.json
+code-dev.js

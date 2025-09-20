@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma Visual Feedback Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .controls {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .status {
+            padding: 12px 24px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status.connected {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .capture-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .capture-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .capture-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .capture-info {
+            padding: 15px;
+        }
+
+        .capture-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .capture-time {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .live-monitor {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .live-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            color: #999;
+        }
+
+        .empty-state h2 {
+            color: #666;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 Figma Visual Feedback Dashboard</h1>
+            <div class="subtitle">Real-time visual monitoring for AI-assisted design</div>
+        </header>
+
+        <div class="controls">
+            <button onclick="captureScreen()">📸 Capture Screen</button>
+            <button onclick="captureFigma()">🎨 Capture Figma</button>
+            <button onclick="toggleMonitor()">📺 <span id="monitorText">Start Monitor</span></button>
+            <button onclick="loadHistory()">🔄 Refresh</button>
+            <div class="status" id="status">
+                <span class="loading"></span>
+                Connecting...
+            </div>
+        </div>
+
+        <div class="live-monitor" id="liveMonitor" style="display: none;">
+            <h3>Live Monitor</h3>
+            <img id="liveImage" class="live-image" alt="Live capture">
+        </div>
+
+        <div class="grid" id="capturesGrid">
+            <div class="empty-state">
+                <h2>No captures yet</h2>
+                <p>Click "Capture Screen" or "Capture Figma" to start</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal" onclick="closeModal()">
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3001';
+        let eventSource = null;
+        let monitoring = false;
+
+        // Check service status
+        async function checkStatus() {
+            const statusEl = document.getElementById('status');
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                statusEl.className = 'status connected';
+                statusEl.innerHTML = `✅ Connected • ${data.captures} captures`;
+            } catch (error) {
+                statusEl.className = 'status error';
+                statusEl.innerHTML = '❌ Service not running';
+            }
+        }
+
+        // Capture screen
+        async function captureScreen() {
+            try {
+                const response = await fetch(`${API_URL}/capture`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target: 'screen' })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    loadHistory();
+                    showNotification('Screen captured!');
+                }
+            } catch (error) {
+                console.error('Capture failed:', error);
+                showNotification('Capture failed', 'error');
+            }
+        }
+
+        // Capture Figma
+        async function captureFigma() {
+            try {
+                const response = await fetch(`${API_URL}/capture`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target: 'figma' })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    loadHistory();
+                    showNotification('Figma captured!');
+                }
+            } catch (error) {
+                console.error('Capture failed:', error);
+                showNotification('Capture failed', 'error');
+            }
+        }
+
+        // Load capture history
+        async function loadHistory() {
+            try {
+                const response = await fetch(`${API_URL}/history`);
+                const data = await response.json();
+                displayCaptures(data.history);
+            } catch (error) {
+                console.error('Failed to load history:', error);
+            }
+        }
+
+        // Display captures
+        function displayCaptures(captures) {
+            const grid = document.getElementById('capturesGrid');
+
+            if (!captures || captures.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h2>No captures yet</h2>
+                        <p>Click "Capture Screen" or "Capture Figma" to start</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = captures.map(capture => {
+                const time = new Date(capture.timestamp).toLocaleString();
+                const imageUrl = capture.url || `${API_URL}/captures/${capture.filename}`;
+
+                return `
+                    <div class="capture-card">
+                        <img class="capture-image"
+                             src="${imageUrl}"
+                             alt="${capture.filename}"
+                             onclick="openModal('${imageUrl}')">
+                        <div class="capture-info">
+                            <div class="capture-name">${capture.filename || capture.type || 'Capture'}</div>
+                            <div class="capture-time">${time}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Toggle monitor
+        function toggleMonitor() {
+            if (monitoring) {
+                stopMonitor();
+            } else {
+                startMonitor();
+            }
+        }
+
+        // Start monitoring
+        function startMonitor() {
+            const liveMonitor = document.getElementById('liveMonitor');
+            const monitorText = document.getElementById('monitorText');
+
+            liveMonitor.style.display = 'block';
+            monitorText.textContent = 'Stop Monitor';
+            monitoring = true;
+
+            eventSource = new EventSource(`${API_URL}/monitor`);
+
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.event === 'capture') {
+                    const liveImage = document.getElementById('liveImage');
+                    liveImage.src = `${API_URL}${data.url}?t=${Date.now()}`;
+                    loadHistory();
+                }
+            };
+
+            eventSource.onerror = (error) => {
+                console.error('Monitor error:', error);
+                stopMonitor();
+            };
+        }
+
+        // Stop monitoring
+        function stopMonitor() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+            }
+
+            const liveMonitor = document.getElementById('liveMonitor');
+            const monitorText = document.getElementById('monitorText');
+
+            liveMonitor.style.display = 'none';
+            monitorText.textContent = 'Start Monitor';
+            monitoring = false;
+        }
+
+        // Open modal
+        function openModal(imageUrl) {
+            const modal = document.getElementById('modal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageUrl;
+            modal.classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            // Could implement toast notifications
+            console.log(`${type}: ${message}`);
+        }
+
+        // Initialize
+        checkStatus();
+        loadHistory();
+        setInterval(checkStatus, 5000);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+            if (e.metaKey && e.key === 's') {
+                e.preventDefault();
+                captureScreen();
+            }
+            if (e.metaKey && e.key === 'f') {
+                e.preventDefault();
+                captureFigma();
+            }
+        });
+    </script>
+</body>
+</html>
