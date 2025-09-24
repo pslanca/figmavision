@@ -1,7 +1,11 @@
 {
-  "name": "TalktoFigma Auto-Exec",
-  "id": "talktofigma-auto-exec",
+  "name": "FigmaVision Medium Grid",
+  "id": "figmavision-medium-v2",
   "api": "1.0.0",
   "main": "code.js",
-  "editorType": ["figma"]
+  "editorType": ["figma"],
+  "permissions": ["teamlibrary"],
+  "relaunchButtons": [
+    {"command": "generate", "name": "Generate Color Grid"}
+  ]
 }
