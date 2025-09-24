@@ -1,6 +1,8 @@
-# TalktoFigma: Teaching AI to See Its Own Designs
+# FigmaVision: Teaching AI to See Its Own Designs
 
 > A system that gives AI assistants visual awareness of their Figma creations, using the official Figma for VS Code integration.
+
+![FigmaVision in Action](figmavision-working.png)
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-macOS-lightgrey.svg)
@@ -19,6 +21,19 @@ This project combines:
 - **Visual feedback service** - Captures and analyzes design output
 - **Spatial awareness** - Collision detection and smart positioning
 
+## 🎮 Try It Now
+
+**Instant Demo:**
+1. Download `figmavision-playground.fig`
+2. Open in Figma Desktop
+3. Import plugin from `auto-exec/manifest.json`
+4. See the perfect Medium hero grid in action!
+
+**One-Command Setup:**
+```bash
+./START_FIGMAVISION.sh  # Starts everything automatically
+```
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -31,8 +46,8 @@ This project combines:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/talktofigma.git
-cd talktofigma
+git clone https://github.com/pslanca/figmavision.git
+cd figmavision
 
 # Install Visual Helper dependencies
 cd visual-helper
@@ -46,6 +61,8 @@ cd ..
 2. Go to **Plugins → Development → Import plugin from manifest**
 3. Select `auto-exec/manifest.json`
 4. The plugin will now auto-execute when you save `code.js`
+
+**Important Note:** The plugin runs in the background without showing a UI. Don't worry if you don't see a plugin window - it's working! Check the console for status messages.
 
 ### Start Visual Helper Service
 
@@ -66,7 +83,7 @@ npm start
 ## 📁 Project Structure
 
 ```
-talktofigma/
+figmavision/
 ├── auto-exec/              # Auto-executing Figma plugin
 │   ├── manifest.json       # Plugin configuration
 │   └── code.js            # Plugin code (edit this!)
@@ -81,10 +98,12 @@ talktofigma/
 ## ✨ Key Features
 
 ### Auto-Executing Plugin (`auto-exec/`)
+- **Background Operation**: Runs silently without UI - check console for logs
 - **Collision Detection**: AABB algorithm prevents overlapping elements
 - **Smart Positioning**: Finds clear space automatically
 - **Document Scanner**: Analyzes entire page structure
 - **Visual Export**: Sends designs to helper service
+- **Font Management**: Handles font loading gracefully with fallbacks
 
 ### Visual Helper Service (`visual-helper/`)
 - **Screen Capture**: Full screen or Figma window

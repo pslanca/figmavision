@@ -214,7 +214,7 @@ When I (the AI assistant) create a color grid in Figma:
 
 This creates a feedback loop that helps me improve designs iteratively!
 
-## 🔗 Integration with TalktoFigma
+## 🔗 Integration with FigmaVision
 
 Add to your Figma plugin to enable visual feedback:
 

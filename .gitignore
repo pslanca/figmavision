@@ -4,6 +4,12 @@
 *.sketch
 *.xd
 
+# Allow demo/playground files
+!*playground.fig
+!*-playground.fig
+!*-demo.fig
+!*-example.fig
+
 # API Keys and Tokens
 .env
 .env.local
@@ -15,7 +21,7 @@ figma-token.txt
 api-keys.txt
 
 # Personal/Client Information
-.memory-bank/
+.claude/
 private/
 client-files/
 work/
@@ -37,6 +43,7 @@ out/
 
 # OS Files
 .DS_Store
+**/.DS_Store
 Thumbs.db
 *.swp
 .idea/
@@ -50,7 +57,15 @@ visual-helper/captures/
 *.jpeg
 *.gif
 *.svg
-!visual-helper/example-capture.png  # Allow example image
+
+# Allow documentation and demo images
+!*-working.png
+!*-demo.png
+!*-example.png
+!*-screenshot.png
+!visual-helper/example-capture.png
+!docs/*.png
+!docs/*.jpg
 
 # VS Code Extension (if it has personal config)
 src/figma-bridge-server.js
