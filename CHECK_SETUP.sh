@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "🔍 FigmaVision Setup Verification"
+echo "FigmaVision Setup Verification"
 echo "================================="
 
 # Check files exist
-echo "📁 Checking core files..."
+echo "Checking core files..."
 files=(
     "auto-exec/code.js"
     "auto-exec/manifest.json"
@@ -26,7 +26,7 @@ done
 
 # Check if node_modules exists
 echo ""
-echo "📦 Checking dependencies..."
+echo "Checking dependencies..."
 if [ -d "visual-helper/node_modules" ]; then
     echo "✅ visual-helper/node_modules (dependencies installed)"
 else
@@ -36,7 +36,7 @@ fi
 
 # Check git status
 echo ""
-echo "📋 Git status..."
+echo "Git status..."
 if git status --porcelain | grep -q .; then
     echo "⚠️  Uncommitted changes:"
     git status --porcelain
@@ -50,7 +50,7 @@ echo "✅ Current branch: $current_branch"
 
 # Memory bank check
 echo ""
-echo "🧠 Memory bank status..."
+echo "Memory bank status..."
 memory_files=(
     ".memory-bank/brief.md"
     ".memory-bank/product.md"
@@ -70,9 +70,9 @@ done
 
 echo ""
 if [ "$all_good" = true ]; then
-    echo "🎉 SETUP COMPLETE - READY FOR NEXT SESSION!"
+    echo "SETUP COMPLETE - READY FOR NEXT SESSION!"
     echo ""
-    echo "🚀 To start everything: ./START_FIGMAVISION.sh"
+    echo "To start everything: ./START_FIGMAVISION.sh"
 else
     echo "⚠️  Some issues found - please resolve before next session"
 fi

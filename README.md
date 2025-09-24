@@ -9,11 +9,11 @@
 ![Figma](https://img.shields.io/badge/Figma-Plugin-red.svg)
 ![VS Code](https://img.shields.io/badge/VS%20Code-Extension-blue.svg)
 
-## 🎯 The Problem
+## The Problem
 
 AI assistants can manipulate Figma designs programmatically but are "blind" to their visual output. They can set RGB values but can't see if colors harmonize. They can position elements but can't detect overlaps.
 
-## 💡 The Solution
+## The Solution
 
 This project combines:
 - **[Figma for VS Code](https://help.figma.com/hc/en-us/articles/15023121296151-Figma-for-VS-Code)** - Official Figma editor embedded in VS Code
@@ -21,7 +21,7 @@ This project combines:
 - **Visual feedback service** - Captures and analyzes design output
 - **Spatial awareness** - Collision detection and smart positioning
 
-## 🎮 Try It Now
+## Try It Now
 
 **Instant Demo:**
 1. Download `figmavision-playground.fig`
@@ -34,7 +34,7 @@ This project combines:
 ./START_FIGMAVISION.sh  # Starts everything automatically
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - VS Code with [Figma for VS Code extension](https://marketplace.visualstudio.com/items?itemName=figma.figma-vscode-extension)
@@ -80,7 +80,7 @@ npm start
 4. Save to see instant updates in Figma
 5. View captures at http://localhost:3001
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 figmavision/
@@ -95,7 +95,7 @@ figmavision/
 └── docs/                  # Documentation
 ```
 
-## ✨ Key Features
+## Key Features
 
 ### Auto-Executing Plugin (`auto-exec/`)
 - **Background Operation**: Runs silently without UI - check console for logs
@@ -137,7 +137,7 @@ async function createColorGrid() {
 createColorGrid();
 ```
 
-## 🔧 API Reference
+## API Reference
 
 ### Plugin Functions
 
@@ -158,7 +158,7 @@ captureVisualFeedback()    // Export as PNG to service
 | `/history` | GET | View captures |
 | `/monitor` | GET | Live monitoring (SSE) |
 
-## 📖 How It Works
+## How It Works
 
 1. **Write Code**: Edit `auto-exec/code.js` in VS Code
 2. **Auto-Execute**: Figma detects change and runs plugin
@@ -167,7 +167,7 @@ captureVisualFeedback()    // Export as PNG to service
 5. **Visual Analysis**: Helper service processes captures
 6. **Feedback Loop**: AI can now "see" and adjust
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please:
 
@@ -177,25 +177,25 @@ We welcome contributions! Please:
 4. Test thoroughly
 5. Submit a pull request
 
-## 📚 Documentation
+## Documentation
 
 - [Full Documentation](docs/DOCUMENTATION.md)
 - [Medium Article](docs/MEDIUM_ARTICLE.md)
 - [Figma Plugin Development](https://www.figma.com/plugin-docs/)
 - [Figma for VS Code](https://help.figma.com/hc/en-us/articles/15023121296151-Figma-for-VS-Code)
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Figma team for the VS Code integration
 - Claude (Anthropic) for being the AI that needed eyes
 - The open source community
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) file
 
 ---
 
-**Built to give AI assistants eyes in the design world!** 👁️🎨
+**Built to give AI assistants eyes in the design world.**
 
-If this helps your AI see better, please ⭐ the repo!
+If this helps your AI see better, please star the repo!
